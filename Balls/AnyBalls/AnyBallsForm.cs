@@ -2,11 +2,11 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace AnyBalls
+namespace Balls
 {
     public partial class AnyBallsForm : Form
     {
-        Random random = new Random();
+        Ball ball;
 
         public AnyBallsForm()
         {
@@ -15,19 +15,19 @@ namespace AnyBalls
 
         private void DrawBallButton_Click(object sender, EventArgs e)
         {
-            var ball = new Ball(this);
+            ball = new Ball(this);
             ball.Draw();
         }
 
         private void DrawRandomSizeAndPointBallButton_Click(object sender, EventArgs e)
         {
-            var ball = new RandomSizeAndPointBall(this);
+            ball = new RandomSizeAndPointBall(this);
             ball.Draw();
         }
 
         private void DrawRandomPointBallButton_Click(object sender, EventArgs e)
         {
-            var ball = new RandomPointBall(this);
+            ball = new RandomPointBall(this);
             ball.Draw();
         }
 
@@ -35,7 +35,7 @@ namespace AnyBalls
         {
             try
             {
-                var ball = new PointBall(this, e.X, e.Y);
+                ball = new PointBall(this, e.X, e.Y);
                 ball.Draw();
             }
             catch (Exception exception)
@@ -44,9 +44,21 @@ namespace AnyBalls
             }
         }
 
+        private void DrawRandomColorAndPointBallButton_Click(object sender, EventArgs e)
+        {
+            ball = new RandomColorAndPointBall(this);
+            ball.Draw();
+        }
+
         private void MoveBallButton_Click(object sender, EventArgs e)
         {
+            ball.Start();
+        }
 
+        private void DrawRandomColorAndPointAndProjectionBallButton_Click(object sender, EventArgs e)
+        {
+            ball = new RandomColorAndPointAndProjectionBall(this);
+            ball.Draw();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace AnyBalls
+namespace Balls
 {
     public class RandomPointBall : Ball
     {

@@ -2,19 +2,22 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace AnyBalls
+namespace Balls
 {
     public class Ball
     {
         protected Form form;
-        private int centerX = 100;
-        private int centerY = 100;
+        private float centerX = 100;
+        private float centerY = 100;
         protected int radius = 25;
-        protected Color color;
+        protected Color color = Color.Aquamarine;
+        protected float vx = 1;
+        protected float vy = 1;
+        public Timer timer;
 
         protected Random random = new Random();
 
-        protected int CenterX
+        protected float CenterX
         {
             set
             {
@@ -27,7 +30,7 @@ namespace AnyBalls
             get { return centerX; }
         }
 
-        protected int CenterY
+        protected float CenterY
         {
             set
             {
@@ -43,18 +46,64 @@ namespace AnyBalls
         public Ball(Form form)
         {
             this.form = form;
+            InitTimer();
+        }
+
+        private void InitTimer()
+        {
+            timer = new Timer();
+            timer.Interval = 30;
+            timer.Tick += Timer_Tick;
+        }
+
+        public void Start()
+        {
+            timer.Start();
+        }
+
+        public void Stop()
+        {
+            timer.Stop();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            Move();
         }
 
         public void Draw()
         {
             var graphics = form.CreateGraphics();
-            var rectangle = new Rectangle(centerX - radius, centerY - radius, radius * 2, radius * 2);
-            graphics.FillEllipse(Brushes.FloralWhite, rectangle);
+            var rectangle = new RectangleF(centerX - radius, centerY - radius, radius * 2, radius * 2);
+            var solidBrush = new SolidBrush(color); 
+            graphics.FillEllipse(solidBrush, rectangle);
+        }
+
+        public void Clear()
+        {
+            var graphics = form.CreateGraphics();
+            var rectangle = new RectangleF(CenterX - radius, CenterY - radius, radius * 2, radius * 2);
+            graphics.FillEllipse(new SolidBrush(form.BackColor), rectangle);
         }
 
         public void Move()
         {
+            Clear();
+            if (CenterX + vx - radius > 0 && CenterX + vx + radius < form.ClientSize.Width &&
+                CenterY + vy - radius > 0 && CenterY + vy + radius < form.ClientSize.Height)
+            {
+                CenterX += vx;
+                CenterY += vy;
+            }
+            else
+                return;
+            Draw();
+        }
 
+        public bool OnForm()
+        {
+            return CenterX - radius > 0 && CenterX + radius < form.ClientSize.Width &&
+                   CenterY - radius > 0 && CenterY + radius < form.ClientSize.Height; 
         }
     }
 }
