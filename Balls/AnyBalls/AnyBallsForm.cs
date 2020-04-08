@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -59,6 +60,17 @@ namespace Balls
         {
             ball = new RandomColorAndPointAndProjectionBall(this);
             ball.Draw();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List<Ball> balls = new List<Ball>();
+            for (int i = 0; i < 5; i++)
+            {
+                ball = new RandomColorAndPointAndProjectionBall(this);
+                ball.Draw();
+                balls.Add(ball);
+            }
         }
     }
 }

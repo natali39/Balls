@@ -15,7 +15,7 @@ namespace Balls
         protected float vy = 1;
         public Timer timer;
 
-        protected Random random = new Random();
+        protected static Random random = new Random();
 
         protected float CenterX
         {
@@ -23,7 +23,7 @@ namespace Balls
             {
                 if ((value < radius) || (value + radius > form.ClientSize.Width))
                 {
-                    throw new ArgumentException("Шарик выходит за границы формы!");
+                    //throw new ArgumentException("Шарик выходит за границы формы!");
                 }
                 centerX = value;
             }
@@ -36,11 +36,19 @@ namespace Balls
             {
                 if (value < radius || value + radius > form.ClientSize.Height)
                 {
-                    throw new ArgumentException("Шарик выходит за границы формы!");
+                    //throw new ArgumentException("Шарик выходит за границы формы!");
                 }
                 centerY = value;
             }
             get { return centerY; }
+        }
+
+        public bool IsMoveable //=> timer.Enabled;
+        {
+            get
+            {
+                return timer.Enabled;
+            }
         }
 
         public Ball(Form form)
@@ -86,17 +94,16 @@ namespace Balls
             graphics.FillEllipse(new SolidBrush(form.BackColor), rectangle);
         }
 
+        protected void Go()
+        {
+            CenterX += vx;
+            CenterY += vy;
+        }
+
         public void Move()
         {
             Clear();
-            if (CenterX + vx - radius > 0 && CenterX + vx + radius < form.ClientSize.Width &&
-                CenterY + vy - radius > 0 && CenterY + vy + radius < form.ClientSize.Height)
-            {
-                CenterX += vx;
-                CenterY += vy;
-            }
-            else
-                return;
+            Go();
             Draw();
         }
 
