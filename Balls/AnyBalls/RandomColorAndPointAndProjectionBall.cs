@@ -2,7 +2,7 @@
 
 namespace Balls
 {
-    class RandomColorAndPointAndProjectionBall : RandomColorAndPointBall
+    public class RandomColorAndPointAndProjectionBall : RandomColorAndPointBall
     {
         public RandomColorAndPointAndProjectionBall(Form form) : base (form)
         {

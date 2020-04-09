@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace Balls
 {
-    class RandomColorAndPointBall : RandomPointBall
+    public class RandomColorAndPointBall : RandomPointBall
     {
         public RandomColorAndPointBall(Form form) : base(form)
         {
